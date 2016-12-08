@@ -91,12 +91,13 @@ console.log(mapHead(['Tab', 'Mark']));
 
 //jk stuff2 -start
 var indexR2 = (names) => {
-  return 
-    _.chain(names)
+  return _.chain(names)
     .map( name => _.first(name))
     .unique()
     .value();
 }
+
+assertEqual(['T', 'M'], indexR2(['Tab', 'Mark', 'Mike']));
 
 console.log(indexR2(['Tab', 'Mark', 'Mike']));
 //jk stuff2 -end
