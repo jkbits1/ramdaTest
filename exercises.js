@@ -42,9 +42,7 @@ var subjects = [{
 
 //∆ mult :: Number -> Number -> Number
 var mult = function mult (x) {
-  return function (y) {
-    return x * y;
-  };
+  return y => x * y;
 };
 
 //∆ multBy4 :: Number -> Number
@@ -56,9 +54,7 @@ assertEqual(12, mult(4)(3)); // ugly, isn't it?
 // Ramda to the rescue (lodash has it as well)
 
 //∆ multR :: Number -> Number -> Number
-var multR = R.curry(function (x, y) {
-  return x * y;
-});
+var multR = R.curry( (x, y) => x * y );
 
 //∆ multRBy4 :: Number -> Number
 var multRBy4 = mult(4);
@@ -67,19 +63,15 @@ assertEqual(12, multRBy4(3));
 assertEqual(12, multR(4, 3)); // neat
 
 //∆ modulo :: Number -> Number -> Number
-var modulo = R.curry(function (divisor, dividend) {
-  return dividend % divisor;
-});
+var modulo = R.curry( (divisor, dividend) => dividend % divisor );
 
 var isOdd = modulo(2);
 
 assertEqual(0, isOdd(8));
 
 // Lodash
-var index = function index(names) {
-  return _.unique(_.map(names, function (name) {
-    return _.first(name);
-  }));
+var index = function index (names) {
+  return _.unique(_.map(names, name => _.first(name) ));
 };
 
 assertEqual(['A', 'J'], index(['Ann', 'Jim', 'Jennifer']));
@@ -127,11 +119,10 @@ console.log('*** Currying: OK');
 
 function getSubjectsU_orig (user) {
   var subjectTitles = user.knownFor;
-
   var _subjects = [];
-  subjectTitles.forEach(function (subject) {
-    return syncSubject(subject);
-  });
+  
+  subjectTitles.forEach( (subject) => syncSubject(subject) );
+
   return subjects;
 }
 
@@ -142,9 +133,7 @@ function getSubjectsU (user) {
   var _subjects =
     //[];
   //subjectTitles.forEach(function (title) {
-  subjectTitles.map(function (title) {
-    return syncSubject(title);
-  });
+  subjectTitles.map( title => syncSubject(title) );
 
   // assuming this is a typo
   //return subjects;
@@ -249,11 +238,7 @@ console.log('*** Composition Exercise 0: OK');
 
 //lodash way
 var sortedFilmsL = function sortedFilmsL (fs) {
-  return _.chain(fs).sortBy(function (film) {
-    return film.rating;
-  }).map(function (film) {
-    return film.title;
-  }).value();
+  return _.chain(fs).sortBy( film => film.rating ).map( film => film.title ).value();
 };
 
 assertEqual(["Beautiful Mind", "Citizen Kane", "Usual Suspects", "Fight Club"], sortedFilmsL(films));
@@ -279,9 +264,9 @@ var ratingHigherThan = function ratingHigherThan (rating) {
 };
 
 //∆ latestGood :: [Object] -> String
-var latestGood = R.compose(function (film) {
-  return film.title + ': ' + film.releaseYear;
-}, R.last, R.sortBy(R.prop('releaseYear')), R.filter(ratingHigherThan(8.6)));
+var latestGood = 
+  R.compose( film => film.title + ': ' + film.releaseYear, 
+  R.last, R.sortBy(R.prop('releaseYear')), R.filter(ratingHigherThan(8.6)));
 
 assertEqual('Fight Club: 1999', latestGood(films));
 console.log('*** Composition Exercise 2: OK');
@@ -299,9 +284,9 @@ var ratingHigherThan = function ratingHigherThan(rating) {
 };
 
 //∆ latestGood :: [Object] -> String
-var latestGood = R.compose(function (film) {
-  return film.title + ': ' + film.releaseYear;
-}, R.last, R.sortBy(R.prop('releaseYear')), R.filter(ratingHigherThan(8.6)));
+var latestGood = 
+  R.compose( film => film.title + ': ' + film.releaseYear, 
+  R.last, R.sortBy(R.prop('releaseYear')), R.filter(ratingHigherThan(8.6)));
 
 assertEqual('Fight Club: 1999', latestGood(films));
 console.log('*** Composition Exercise 3: OK');
@@ -387,9 +372,7 @@ var Box = function Box (v) {
   this.value = v;
 };
 
-Box.prototype.map = function (f) {
-  return new Box(f(this.value));
-};
+Box.prototype.map = f => new Box( f( this.value ) );
 
 var two = new Box(2);
 
