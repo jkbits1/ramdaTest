@@ -526,5 +526,5 @@ function syncUser () {
 }
 
 function syncSubject (title) {
-  return R.compose(R.nth(0), R.filter( subj => return subj.title === title; )) (subjects);
+  return R.compose(R.nth(0), R.filter( subj => subj.title === title )) (subjects);
 }
