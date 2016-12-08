@@ -176,6 +176,9 @@ console.log('*** Vanilla Composition: OK');
 
 function getSubjectsL (user) {
   var subjectTitles = _.get(user, 'knownFor');
+
+  // Haskell(ish) version
+  // syncSubject title = filter ( \subj = subj.title == title ) subjects
   return _.map(subjectTitles, syncSubject);
 }
 
@@ -531,5 +534,8 @@ function syncUser () {
 }
 
 function syncSubject (title) {
+  // Haskell(ish) version
+  // syncSubject title = filter ( \subj = subj.title == title ) subjects
+
   return R.compose(R.nth(0), R.filter( subj => subj.title === title )) (subjects);
 }
