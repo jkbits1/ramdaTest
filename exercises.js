@@ -57,7 +57,9 @@ assertEqual(12, mult(4)(3)); // ugly, isn't it?
 var multR = R.curry( (x, y) => x * y );
 
 //∆ multRBy4 :: Number -> Number
-var multRBy4 = mult(4);
+// original test uses previous function
+// var multRBy4 = mult(4);
+var multRBy4 = multR(4);
 
 assertEqual(12, multRBy4(3));
 assertEqual(12, multR(4, 3)); // neat
@@ -86,6 +88,18 @@ var mapHead = R.map(R.head);
 
 console.log(mapHead(['Tab', 'Mark']));
 //jk stuff - end
+
+//jk stuff2 -start
+var indexR2 = (names) => {
+  return 
+    _.chain(names)
+    .map( name => _.first(name))
+    .unique()
+    .value();
+}
+
+console.log(indexR2(['Tab', 'Mark', 'Mike']));
+//jk stuff2 -end
 
 // This code reads better. In fact I wish could read this kind of code all day
 assertEqual(['A', 'J'], indexR(['Ann', 'Jim', 'Jennifer']));
