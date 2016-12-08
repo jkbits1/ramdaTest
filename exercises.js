@@ -87,6 +87,14 @@ assertEqual(['A', 'J'], index(['Ann', 'Jim', 'Jennifer']));
 //Ramda
 var indexR = R.compose(R.uniq, R.map(R.head));
 
+//jk stuff - start
+var hd = R.head;
+
+var mapHead = R.map(R.head);
+
+console.log(mapHead(['Tab', 'Mark']));
+//jk stuff - end
+
 // This code reads better. In fact I wish could read this kind of code all day
 assertEqual(['A', 'J'], indexR(['Ann', 'Jim', 'Jennifer']));
 
@@ -115,7 +123,9 @@ console.log('*** Currying: OK');
 
  ------------------------------------------------------------*/
 
-function getSubjectsU(user) {
+// jk - rewriting args for clarity/possible bug - start
+
+function getSubjectsU_orig(user) {
   var subjectTitles = user.knownFor;
 
   var _subjects = [];
@@ -124,6 +134,24 @@ function getSubjectsU(user) {
   });
   return subjects;
 }
+
+function getSubjectsU(user) {
+  var subjectTitles = user.knownFor;
+
+  // should forEach push, or be a map?
+  var _subjects =
+    //[];
+  //subjectTitles.forEach(function (title) {
+  subjectTitles.map(function (title) {
+    return syncSubject(title);
+  });
+
+  // assuming this is a typo
+  //return subjects;
+  return _subjects;
+}
+// jk - rewriting args for clarity/possible bug - end
+
 
 assertEqual(subjects, getSubjectsU(user));
 
