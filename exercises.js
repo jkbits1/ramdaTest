@@ -90,6 +90,8 @@ console.log(mapHead(['Tab', 'Mark']));
 //jk stuff - end
 
 //jk stuff2 -start
+
+// Underscore
 var indexR2 = (names) => {
   return _.chain(names)
     .map( name => _.first(name))
@@ -132,8 +134,12 @@ console.log('*** Currying: OK');
 
 // jk - rewriting args for clarity/possible bug - start
 
+// NOTE: the functions below include code to filter subjects, but the sample data means that 
+//       the filtered results are the same as the original data. Still, the assertEqual does check for this result.
+
 function getSubjectsU_orig (user) {
   var subjectTitles = user.knownFor;
+
   var _subjects = [];
   
   subjectTitles.forEach( (subject) => syncSubject(subject) );
@@ -143,12 +149,13 @@ function getSubjectsU_orig (user) {
 
 function getSubjectsU (user) {
   var subjectTitles = user.knownFor;
+  // knownFor: ['Combinatory logic', 'Curry–Howard correspondence', 'Curry\'s paradox'],
 
   // should forEach push, or be a map?
   var _subjects =
     //[];
-  //subjectTitles.forEach(function (title) {
-  subjectTitles.map( title => syncSubject(title) );
+    //subjectTitles.forEach(function (title) {
+    subjectTitles.map( title => syncSubject(title) );
 
   // assuming this is a typo
   //return subjects;
