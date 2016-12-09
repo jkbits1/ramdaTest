@@ -71,6 +71,10 @@ var isOdd = modulo(2);
 
 assertEqual(0, isOdd(8));
 
+// Haskell(ish)
+// unique = Data.List.nub
+// index names = unique $ map (\name -> head name) names
+
 // Lodash
 var index = function index (names) {
   return _.unique(_.map(names, name => _.first(name) ));
@@ -91,10 +95,14 @@ console.log(mapHead(['Tab', 'Mark']));
 
 //jk stuff2 -start
 
+// Haskell(ish)
+// unique = Data.List.nub
+// index names = unique $ map (\name -> head name) names
+
 // Underscore
 var indexR2 = (names) => {
   return _.chain(names)
-    .map( name => _.first(name))
+    .map( name => _.first(name) )
     .unique()
     .value();
 }
@@ -151,6 +159,10 @@ function getSubjectsU (user) {
   var subjectTitles = user.knownFor;
   // knownFor: ['Combinatory logic', 'Curry–Howard correspondence', 'Curry\'s paradox'],
 
+  // Haskell(ish)
+  // syncSubject title = filter ( \subj = subj.title == title ) subjects
+  // userSubjects = map syncSubject subjectTitles
+
   // should forEach push, or be a map?
   var _subjects =
     //[];
@@ -177,8 +189,10 @@ console.log('*** Vanilla Composition: OK');
 function getSubjectsL (user) {
   var subjectTitles = _.get(user, 'knownFor');
 
-  // Haskell(ish) version
+  // Haskell(ish)
   // syncSubject title = filter ( \subj = subj.title == title ) subjects
+  // userSubjects = map syncSubject subjectTitles
+
   return _.map(subjectTitles, syncSubject);
 }
 
@@ -207,6 +221,10 @@ console.log('*** Lodash Composition: OK ');
 
  ***********************************************/
 
+  // Haskell(ish)
+  // syncSubject title = filter ( \subj = subj.title == title ) subjects
+  // userSubjects = map syncSubject subjectTitles
+
 var getSubjectsR = R.compose(R.map(syncSubject), R.prop('knownFor'));
 
 assertEqual(subjects, getSubjectsR(user));
@@ -222,6 +240,9 @@ console.log('*** Ramda Composition: Amazing');
  first names if their name is 5 letters long (really useful one)
 
  ***********************************************/
+
+ 
+// map (\film -> film.director) films
 
 var films = [{
   title: 'Citizen Kane',
