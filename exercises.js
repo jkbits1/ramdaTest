@@ -241,9 +241,6 @@ console.log('*** Ramda Composition: Amazing');
 
  ***********************************************/
 
- 
-// map (\film -> film.director) films
-
 var films = [{
   title: 'Citizen Kane',
   rating: 8.4,
@@ -265,6 +262,28 @@ var films = [{
   releaseYear: 1995,
   director: 'Bryan Singer'
 }];
+
+// jk start
+// filter (\name -> name.length == 5) $ map (\film -> firstN film.director) films
+
+// firstN name = head $ name.split('')  
+function firstName (name) {
+  // Haskell(ish) version
+  // syncSubject title = filter ( \subj = subj.title == title ) subjects
+
+  // doesn't work
+  // return R.compose(R.nth(0), R.split(" ", name))();
+  return R.compose(R.nth(0), R.split(" "))(name);
+}
+
+// var getNames = R.compose(R.map(firstName), R.map(R.prop('director')));
+var getNames = R.compose(R.filter(name => name.length === 5), R.map(firstName), R.map(R.prop('director')));
+
+console.log("getNames: ", getNames(films));
+
+assertEqual(['Orson', 'David', 'Bryan'], getNames(films));
+
+// jk end
 
 //∆ directors :: [Object] -> [String]
 var directors = R.map(R.compose(R.head, R.split(' '), R.prop('director')));
