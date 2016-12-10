@@ -334,6 +334,30 @@ console.log('*** Composition Exercise 1: OK');
 
  */
 
+//  jk start
+
+//  latest = head $ sort (\f -> f.releaseYear) $ filter (\f -> f.rating > 8.6)
+// latestInfo latest = (latest.title, latest.releaseYear)
+
+var latest = R.compose(R.nth(0), R.sort((f1, f2) => f1.releaseYear > f2.releaseYear), R.filter((f => f.rating > 8.6)));
+
+// make rating a param
+var latest2 = (rating) => {
+  return R.compose(R.head, R.sort((f1, f2) => f1.releaseYear < f2.releaseYear), R.filter((f => f.rating > rating)));
+} 
+
+// var latestInfo = latest (films);
+var latestInfo86 = latest2 (8.3);
+var latestInfo = latestInfo86 (films);
+
+var latestInfoPair = {
+  title: latestInfo.title,
+  releaseYear: latestInfo.releaseYear
+}
+
+//  jk end
+
+
 //∆ ratingHigherThan :: Number -> (Object -> Boolean)
 var ratingHigherThan = function ratingHigherThan (rating) {
   return R.compose(R.lte(rating), R.prop('rating'));
@@ -351,6 +375,8 @@ console.log('*** Composition Exercise 2: OK');
 
  4.3 Write a function that returns the latest film
  title and release year for the film with rating higher than 8.6
+
+jk NOTE: duplicate of 4.2
 
  */
 
@@ -372,6 +398,20 @@ console.log('*** Composition Exercise 3: OK');
  4.4 Write a function that returns the year of the earliest
  release in the list
  */
+
+// jk start
+
+// earliestByYear = head $ sort (\f1, f2 -> f1.releaseYear > f2.releaseYear)
+// (earliestByYear films).releaseYear
+
+var earliestByYear = R.compose(R.prop('releaseYear'), R.head, R.sort((f1, f2) => f1.releaseYear > f2.releaseYear));
+
+var earliestByYearInfo = earliestByYear(films);
+
+// reduce version
+
+// jk end
+
 
 //∆ earliest :: [Object] -> Number
 var earliest = R.compose(R.reduce(R.min, 2015), R.map(R.prop('releaseYear')));
