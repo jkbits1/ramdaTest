@@ -301,6 +301,17 @@ console.log('*** Composition Exercise 0: OK');
 
  ***********************************************/
 
+//  jk start
+
+// map (\f -> f.name) $ sort (\f1 f2 -> f1.rating < f2.rating )  films
+
+// var sortByRating = R.sort((f1, f2) => f1.rating > f2.rating);
+var filmNamesByRating = R.compose(R.map(f => f.title), R.sort((f1, f2) => f1.rating > f2.rating));
+
+var ratedFilms = filmNamesByRating(films);
+
+//  jk end
+
 //lodash way
 var sortedFilmsL = function sortedFilmsL (fs) {
   return _.chain(fs).sortBy( film => film.rating ).map( film => film.title ).value();
